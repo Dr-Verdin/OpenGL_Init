@@ -4,6 +4,6 @@ Primeiros códigos de OpenGL com C++, com base no OpenGL-Tutorial do Breno (ex-a
 ## 1. Print Basics Shapes
 Desenhar formas geométricas.
 
-<img src="./img/1.png" height="250">
+<img src="./img/1.png" height="500">
 
 
