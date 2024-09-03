@@ -19,33 +19,34 @@ int main(int argc, char** argv) {
     glutInitWindowSize(windowWidth, windowHeight);
     glutInitWindowPosition(0, 0);
     glutCreateWindow("OpenGL - Print Basics Shapes");
-    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-    glutDisplayFunc(draw);
-    glutMainLoop();
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f); // Define a cor de fundo da janela como branca
+    glutDisplayFunc(draw); // Registra a função de desenhar
+    glutMainLoop(); // Entra no loop principal do GLUT
 
     return 0;
 }
 
 void draw(){
-    glClear(GL_COLOR_BUFFER_BIT);
-    glLoadIdentity(); 
+    glClear(GL_COLOR_BUFFER_BIT); // Limpa o buffer de cor
+    glLoadIdentity(); // Reseta a matriz de transformação
 
     // A tela padrão do OpenGL tem suas coordenadas X e Y de -1 até 1
-    // Coordenada (-1 -1) é o canto inferior esquerdo
-    // Coordenada (-1 1) é o canto superior esquerdo
-    // Coordenada (0 0) é o centro da tela
+    // Coordenada (-1, -1) é o canto inferior esquerdo
+    // Coordenada (-1, 1) é o canto superior esquerdo
+    // Coordenada (0, 0) é o centro da tela
     
+    // Desenha várias formas com diferentes parâmetros
     triangle(0.5, 0.5, 0.4, 0.5);
     rectangle(0, 0, 0.3, 0.4);
     circle(-0.5, 0.5, 0.2);
     star(-0.5, -0.5, 0.4, 0.15);
     copas(0.5, -0.5, 0.02);
 
-    glutSwapBuffers(); // Responsável por trocar os buffers (usado para animação e renderização dupla), você só deve chamá-la uma vez por frame, normalmente no final da função draw.
+    glutSwapBuffers(); // Troca os buffers para exibir o frame desenhado
 }
 
 /* ----- TRIANGLE ----- */
-void triangle(float x, float y, float h, float b) { // x do centro, y do centro, h altura e b base
+void triangle(float x, float y, float h, float b) {
     glColor3f(1.0f, 0.0f, 0.0f); // Define a cor do triângulo (vermelho)
     glBegin(GL_TRIANGLES); // Inicia a definição dos vértices do triângulo
         glVertex2f(x - b / 2, y - h / 2); // Vértice inferior esquerdo
@@ -54,7 +55,7 @@ void triangle(float x, float y, float h, float b) { // x do centro, y do centro,
     glEnd(); // Finaliza a definição dos vértices
 }
 
-void rectangle(float x, float y, float w, float h) { // x do centro, y do centro, w largura e h altura
+void rectangle(float x, float y, float w, float h) {
     glColor3f(0.0f, 0.0f, 1.0f); // Define a cor do retângulo (azul)
     glBegin(GL_QUADS); // Inicia a definição dos vértices do retângulo
         glVertex2f(x - w / 2, y - h / 2); // Vértice inferior esquerdo
@@ -64,25 +65,25 @@ void rectangle(float x, float y, float w, float h) { // x do centro, y do centro
     glEnd(); // Finaliza a definição dos vértices
 }
 
-void circle(float x, float y, float r){ // x do centro, y do centro, r raio
+void circle(float x, float y, float r){
     glColor3f(1.0f, 1.0f, 0.0f); // Define a cor do círculo (amarelo)
     glBegin(GL_POLYGON); // Inicia a definição dos vértices do polígono
         for(int i = 0; i < 360; i += 10){ // Loop para criar os vértices do círculo
-            float angle = i * M_PI / 180; // COnverte o ângulo de graus para radianos
-            glVertex2f(r * std::cos(angle) + x, r * std::sin(angle) + y); // Define o vẃrtice na borda do círculo
+            float angle = i * M_PI / 180; // Converte o ângulo de graus para radianos
+            glVertex2f(r * std::cos(angle) + x, r * std::sin(angle) + y); // Define o vértice na borda do círculo
         }
     glEnd(); // Finaliza a definição dos vértices do polígono 
 }
 
-void star(float x, float y, float rExt, float rInt){ // x do centro, y do centro, r raio
+void star(float x, float y, float rExt, float rInt){
     glColor3f(0.65f, 0.0f, 1.0f); // Define a cor da estrela (roxo)
     
     glBegin(GL_TRIANGLE_FAN); // Inicia a definição dos vértices da estrela
     
-    glVertex2f(x, y); // Vétice central da estrela
+    glVertex2f(x, y); // Vértice central da estrela
     
         for(int i = 0; i < 360; i += 72){ // 72 graus para as 5 pontas
-            float angle = i * M_PI / 180.0f; // COnverte o ��ngulo de graus para radianos
+            float angle = i * M_PI / 180.0f; // Converte o ângulo de graus para radianos
             float xExt = x + rExt * cos(angle); // Coordenada x do ponto externo
             float yExt = y + rExt * sin(angle); // Coordenada y do ponto externo
 
@@ -106,11 +107,11 @@ void star(float x, float y, float rExt, float rInt){ // x do centro, y do centro
     glEnd(); // Finaliza a definição dos vértices da estrela
 }
 
-void copas(float x, float y, float r){ // x do centro, y do centro
+void copas(float x, float y, float r) {
     glColor3f(0.0f, 1.0f, 0.0f); // Define a cor do polígono (verde)
-    glBegin(GL_POLYGON); // INicia a definição dos vértices do polígono
+    glBegin(GL_POLYGON); // Inicia a definição dos vértices do polígono
         
-        for(float t = 0; t <= 2 * PI; t += 0.01f){ // 
+        for(float t = 0; t <= 2 * PI; t += 0.01f){ // Gera pontos ao longo da curva
             float dx = 16 * pow(sin(t), 3);
             float dy = 13 * cos(t) - 5 * cos(2 * t) - 2 * cos(3 * t) - cos(4 * t);
             glVertex2f(x + r * dx, y + r * dy); // Adiciona o vértice
