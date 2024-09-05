@@ -12,3 +12,7 @@ lean:
 shapes:
 	g++ print_basics_shapes.cpp -o run $(flags)
 	./run
+
+anime:
+	g++ animation.cpp -o run $(flags)
+	./run
